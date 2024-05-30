@@ -543,6 +543,28 @@
         border-color: #b78cc5;
         outline: none;
       }
+      .spinner {
+        display: none;
+        margin: 20px auto;
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #000;
+        animation: spin 1s infinite linear;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-container {
+        display: none;
+        text-align: center;
+        padding: 20px;
+      }
     </style>
     <div class="report-form-container" id="reportFormContainer">
       <div class="report-form">
@@ -567,42 +589,12 @@
         </form>
       </div>
     </div>
+    <div class="loading-container" id="loadingContainer">
+      <div class="spinner" id="spinner"></div>
+      <p>Sending feedback...</p>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-    <script type="text/javascript">
-      (function () {
-        emailjs.init("YOUR_USER_ID");
-      })();
 
-      document
-        .getElementById("feedbackForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          const feedbackType = document.getElementById("feedbackType").value;
-          const description = document.getElementById("description").value;
-          const rating = document.getElementById("rating").value;
-
-          const templateParams = {
-            feedback_type: feedbackType,
-            description: description,
-            rating: rating,
-            to_email: "roshansaiketham67@gmail.com",
-          };
-
-          emailjs
-            .send("service_a00p7x8", "template_shzpc7g", templateParams)
-            .then(
-              function (response) {
-                console.log("SUCCESS!", response.status, response.text);
-                alert("Feedback sent successfully!");
-              },
-              function (error) {
-                console.log("FAILED...", error);
-                alert("Failed to send feedback. Please try again.");
-              }
-            );
-        });
-    </script>
     <script>
       document
         .querySelector(".search-bar input")
@@ -628,6 +620,7 @@
             dropdown.style.display = "block";
           }
         });
+
       function toggleDropdown() {
         var dropdownContent = document.getElementById("dropdownContent");
         dropdownContent.style.display =
@@ -649,6 +642,50 @@
           reportFormContainer.style.display = "none";
         }
       };
+
+      (function () {
+        emailjs.init("YOUR_USER_ID");
+      })();
+
+      document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const feedbackType = document.getElementById("feedbackType").value;
+          const description = document.getElementById("description").value;
+          const rating = document.getElementById("rating").value;
+
+          const templateParams = {
+            feedback_type: feedbackType,
+            description: description,
+            rating: rating,
+            to_email: "roshansaiketham67@gmail.com",
+          };
+
+          // Show loading spinner
+          document.getElementById("spinner").style.display = "block";
+          document.getElementById("loadingContainer").style.display = "block";
+
+          emailjs
+            .send("service_a00p7x8", "template_shzpc7g", templateParams)
+            .then(
+              function (response) {
+                console.log("SUCCESS!", response.status, response.text);
+                alert("Feedback sent successfully!");
+              },
+              function (error) {
+                console.log("FAILED...", error);
+                alert("Failed to send feedback. Please try again.");
+              }
+            )
+            .finally(function () {
+              // Hide loading spinner
+              document.getElementById("spinner").style.display = "none";
+              document.getElementById("loadingContainer").style.display =
+                "none";
+            });
+        });
     </script>
   </body>
 </html>
