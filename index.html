@@ -10,6 +10,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
     <style>
       * {
         margin: 0;
@@ -547,7 +549,11 @@
     <div class="report-form-container" id="reportFormContainer">
       <div class="report-form">
         <h2>Feedback Form</h2>
-        <form action="/submit-feedback" method="POST">
+        <form
+          action="/submit-feedback"
+          method="POST"
+          onsubmit="return sendFeedback(this);"
+        >
           <label for="feedbackType">Type:</label>
           <input type="text" id="feedbackType" name="feedbackType" required />
 
@@ -618,6 +624,21 @@
           reportFormContainer.style.display = "none";
         }
       };
+      
+      function sendFeedback(form) {
+        emailjs.sendForm("service_a00p7x8", "template_shzpc7g", form).then(
+          function (response) {
+            alert("Feedback sent successfully!");
+            console.log("SUCCESS!", response.status, response.text);
+            form.reset();
+          },
+          function (error) {
+            alert("Failed to send feedback. Please try again later.");
+            console.log("FAILED...", error);
+          }
+        );
+        return false; // Prevent the form from submitting normally
+      }
     </script>
   </body>
 </html>
