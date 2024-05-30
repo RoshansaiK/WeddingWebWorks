@@ -547,15 +547,20 @@
     <div class="report-form-container" id="reportFormContainer">
       <div class="report-form">
         <h2>Feedback Form</h2>
-        <form>
+        <form action="/submit-feedback" method="POST">
           <label for="feedbackType">Type:</label>
-          <input type="text" id="feedbackType" name="feedbackType" />
+          <input type="text" id="feedbackType" name="feedbackType" required />
 
           <label for="description">Description:</label>
-          <textarea id="description" name="description" rows="4"></textarea>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            required
+          ></textarea>
 
           <label for="rating">Rating:</label>
-          <select id="rating" name="rating">
+          <select id="rating" name="rating" required>
             <option value="5">Excellent</option>
             <option value="4">Very Good</option>
             <option value="3">Good</option>
@@ -567,8 +572,6 @@
         </form>
       </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js"></script>
     <script>
       document
         .querySelector(".search-bar input")
@@ -615,42 +618,6 @@
           reportFormContainer.style.display = "none";
         }
       };
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyBHs0idM-mVyuwV1ozUkWeaOBXbUnrJP9I",
-        authDomain: "wedding-e880e.firebaseapp.com",
-        databaseURL: "https://wedding-e880e-default-rtdb.firebaseio.com",
-        projectId: "wedding-e880e",
-        storageBucket: "wedding-e880e.appspot.com",
-        messagingSenderId: "209725743107",
-        appId: "1:209725743107:web:8271ff071b5cd63750ee36",
-      };
-
-      firebase.initializeApp(firebaseConfig);
-
-      const database = firebase.database();
-
-      document
-        .getElementById("feedbackForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-
-          var feedbackType = document.getElementById("feedbackType").value;
-          var description = document.getElementById("description").value;
-          var rating = document.getElementById("rating").value;
-
-          // Push the feedback data to Firebase
-          database.ref("feedback").push({
-            type: feedbackType,
-            description: description,
-            rating: rating,
-          });
-
-          // Reset the form
-          document.getElementById("feedbackForm").reset();
-
-          alert("Feedback submitted successfully!");
-        });
     </script>
   </body>
 </html>
