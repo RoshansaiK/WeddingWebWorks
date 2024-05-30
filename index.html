@@ -615,40 +615,42 @@
           reportFormContainer.style.display = "none";
         }
       };
-      var firebaseConfig = {
+
+      const firebaseConfig = {
         apiKey: "AIzaSyBHs0idM-mVyuwV1ozUkWeaOBXbUnrJP9I",
         authDomain: "wedding-e880e.firebaseapp.com",
+        databaseURL: "https://wedding-e880e-default-rtdb.firebaseio.com",
         projectId: "wedding-e880e",
         storageBucket: "wedding-e880e.appspot.com",
         messagingSenderId: "209725743107",
         appId: "1:209725743107:web:8271ff071b5cd63750ee36",
       };
 
-      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
 
-      function submitFeedback(event) {
-        event.preventDefault();
+      const database = firebase.database();
 
-        var feedbackType = document.getElementById("feedbackType").value;
-        var description = document.getElementById("description").value;
-        var rating = document.getElementById("rating").value;
+      document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-        // Get a reference to the Firebase database service
-        var database = firebase.database();
+          var feedbackType = document.getElementById("feedbackType").value;
+          var description = document.getElementById("description").value;
+          var rating = document.getElementById("rating").value;
 
-        // Push the feedback data to Firebase
-        database.ref("feedback").push({
-          type: feedbackType,
-          description: description,
-          rating: rating,
+          // Push the feedback data to Firebase
+          database.ref("feedback").push({
+            type: feedbackType,
+            description: description,
+            rating: rating,
+          });
+
+          // Reset the form
+          document.getElementById("feedbackForm").reset();
+
+          alert("Feedback submitted successfully!");
         });
-
-        // Reset the form
-        document.getElementById("feedbackForm").reset();
-
-        alert("Feedback submitted successfully!");
-      }
     </script>
   </body>
 </html>
