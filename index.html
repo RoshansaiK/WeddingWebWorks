@@ -295,7 +295,7 @@
           >
           <pre>|</pre>
           <a href="#" class="feedback" onclick="showReportForm()"
-            ><i class="fas fa-comments"></i>Feedback</a
+            ><i class="fas fa-comments"></i>Message</a
           >
         </div>
       </nav>
@@ -545,38 +545,33 @@
         border-color: #b78cc5;
         outline: none;
       }
+      :root {
+        --purple-color: #8a2be2; /* Purple */
+        --pink-color: #ff69b4; /* Pink */
+      }
+    
+      /* Apply the colors to the message and style the font */
+      #feedback-form {
+        background-color: var(--purple-color);
+        color: var(--pink-color);
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-family: cursive;
+        font-size: 18px;
+        line-height: 1.5;
+      }
     </style>
+    
+    
+    
+    
     <div class="report-form-container" id="reportFormContainer">
       <div class="report-form">
-        <h2>Feedback Form</h2>
-        <form
-          action="https://api.emailjs.com/api/v1.0/email/send"
-          method="post"
-          onsubmit="return sendFeedback(this);"
-        >
-          <input type="hidden" name="Gmail" value="service_5o1riog" />
-          <input type="hidden" name="Feedback" value="template_shzpc7g" />
-
-          <label for="feedbackType">Type:</label>
-          <input type="text" id="feedbackType" name="feedbackType" required />
-          <label for="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            rows="4"
-            required
-          ></textarea>
-          <label for="rating">Rating:</label>
-          <select id="rating" name="rating" required>
-            <option value="5">Excellent</option>
-            <option value="4">Very Good</option>
-            <option value="3">Good</option>
-            <option value="2">Fair</option>
-            <option value="1">Poor</option>
-          </select>
-          <button type="submit">Submit</button>
-        </form>
+        <div id="feedback-form">
+          <p>Thank you for visiting Digital Templates. If you'd like to communicate or discuss design, please contact me at my info.</p>
       </div>
+      
     </div>
     <script>
       document
