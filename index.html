@@ -550,13 +550,23 @@
       <div class="report-form">
         <h2>Feedback Form</h2>
         <form
-          action="/submit-feedback"
-          method="POST"
+          action="https://api.emailjs.com/api/v1.0/email/send"
+          method="post"
           onsubmit="return sendFeedback(this);"
         >
+          <input
+            type="hidden"
+            name="service_id"
+            value="your_emailjs_service_id"
+          />
+          <input
+            type="hidden"
+            name="template_id"
+            value="your_emailjs_template_id"
+          />
+          <input type="hidden" name="user_id" value="your_emailjs_user_id" />
           <label for="feedbackType">Type:</label>
           <input type="text" id="feedbackType" name="feedbackType" required />
-
           <label for="description">Description:</label>
           <textarea
             id="description"
@@ -564,7 +574,6 @@
             rows="4"
             required
           ></textarea>
-
           <label for="rating">Rating:</label>
           <select id="rating" name="rating" required>
             <option value="5">Excellent</option>
@@ -573,7 +582,6 @@
             <option value="2">Fair</option>
             <option value="1">Poor</option>
           </select>
-
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -624,7 +632,7 @@
           reportFormContainer.style.display = "none";
         }
       };
-      
+
       function sendFeedback(form) {
         emailjs.sendForm("service_a00p7x8", "template_shzpc7g", form).then(
           function (response) {
