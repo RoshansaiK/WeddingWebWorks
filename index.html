@@ -1,3 +1,21 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "Naaistam@94";
+$database = "wedding";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
+// Assuming you have form data stored in variables like $feedbackType,
+$description, $rating $feedbackType = $_POST['feedbackType']; $description =
+$_POST['description']; $rating = $_POST['rating']; $sql = "INSERT INTO feedback
+(feedbackType, description, rating) VALUES ('$feedbackType', '$description',
+'$rating')"; if ($conn->query($sql) === TRUE) { echo "New record created
+successfully"; } else { echo "Error: " . $sql . "<br />" . $conn->error; }
+$conn->close(); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
